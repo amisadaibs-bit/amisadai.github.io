@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reparación y Mantenimiento | Amisadai Bautista</title>
+
+  <!-- Estilo oscuro coherente con index.html y 1/1.html -->
+  <style>
+    :root{
+      --bg:#0d0d0d; --fg:#e6e6e6; --muted:#b3b3b3; --accent:#4da6ff;
+      --card:#111111; --border:#1f1f1f;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0; background:var(--bg); color:var(--fg); font-family:Arial,system-ui,Segoe UI,Roboto,sans-serif}
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    header{padding:56px 20px; text-align:center; border-bottom:1px solid #222}
+    .title{font-size:clamp(24px,4vw,36px); font-weight:300; margin:0}
+    .subtitle{color:#999; font-weight:300; margin-top:6px}
+
+    .top-actions{display:flex; justify-content:center; gap:12px; margin-top:14px}
+    .btn{display:inline-block; padding:10px 12px; border:1px solid var(--border); border-radius:6px; color:#bbb; background:#101010}
+    .btn:hover{border-color:#444}
+
+    .wrap{max-width:1100px; margin:0 auto; padding:24px}
+    .badge{display:inline-block; padding:6px 10px; border:1px solid var(--border); border-radius:999px; margin:6px 6px 0 0; color:#aaa; font-size:12px}
+
+    .section{background:var(--card); border:1px solid var(--border); border-radius:8px; padding:20px; margin:14px 0}
+    .section h2{font-weight:300; color:#cfcfcf; margin:0 0 8px 0; font-size:clamp(18px,2.5vw,24px)}
+    .section h3{font-weight:300; color:#cfcfcf; margin:14px 0 6px; font-size:clamp(16px,2.2vw,20px)}
+    .section p{color:#ddd; line-height:1.6; margin:8px 0}
+    .muted{color:var(--muted)}
+    .small{font-size:12px; color:#9c9c9c}
+
+    .grid{display:grid; gap:16px}
+    .cols-2{grid-template-columns:repeat(2,1fr)}
+    .cols-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width:860px){ .cols-2,.cols-3{grid-template-columns:1fr} }
+
+    .card{background:#101010; border:1px solid var(--border); border-radius:8px; padding:16px}
+    .imgbox{
+      background:#0c0c0c; border:1px dashed var(--border); border-radius:8px;
+      padding:10px; display:flex; align-items:center; justify-content:center; min-height:180px; color:#aaa
+    }
+    .imgbox img{max-width:100%; border-radius:6px}
+    .caption{margin-top:8px; color:#cfcfcf; font-weight:300}
+    .desc{color:#bbb; font-size:14px; line-height:1.6}
+    .list{margin:8px 0 4px 20px}
+
+    .footer{padding:40px 0; color:#777; font-size:.9rem; text-align:center; border-top:1px solid #222; margin-top:42px}
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="title">Reparación y Mantenimiento Electrónico</h1>
+    <h2 class="subtitle">Microondas · Lavadora · iPad · PC de escritorio</h2>
+    <div class="top-actions">
+      <a class="btn" href="../index.html">← Volver al Portafolio</a>
+    </div>
+    <div style="margin-top:10px">
+      <span class="badge">Diagnóstico electrónico</span>
+      <span class="badge">SMD/TH · Soldadura</span>
+      <span class="badge">Electromecánica</span>
+      <span class="badge">Servicio y mantenimiento</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- Resumen -->
+    <section class="section">
+      <h2>Resumen</h2>
+      <p>
+        Intervenciones de reparación y mantenimiento realizadas: <strong>tarjeta de microondas</strong> (diagnóstico y sustitución de componentes),
+        <strong>magnetrón</strong> adquirido e instalado, <strong>tarjeta de control de lavadora</strong> (fallas de alimentación/lógica),
+        <strong>cambio de pantalla de iPad</strong> (ensamble fino), y <strong>mantenimiento a PC</strong> (pasta térmica, limpieza y ampliación de <em>RAM</em>).
+      </p>
+    </section>
+
+    <!-- Galería de trabajos (4 fotos) -->
+    <section class="section">
+      <h2>Trabajos destacados</h2>
+
+      <div class="grid cols-2">
+        <!-- 1) Microondas: tarjeta y magnetrón -->
+        <div class="card">
+          <div class="imgbox">
+          <img src="MICRO.jpeg" alt="Tarjeta de microondas y magnetrón">
+          </div>
+          <div class="caption">Reparación de microondas: tarjeta + magnetrón</div>
+          <p class="desc">
+            Diagnóstico de la <strong>tarjeta de control</strong> (fusibles, relés, triac y pistas), prueba de alta tensión y
+            <strong>sustitución del magnetrón</strong>. Verificación de seguridad en puerta, interlocks, transformador y ventilación.
+          </p>
+          <ul class="list">
+            <li>Pruebas de continuidad y aislación.</li>
+            <li>Revisión de relés y elementos de potencia.</li>
+            <li>Instalación del magnetrón y test de calentamiento.</li>
+          </ul>
+        </div>
+
+        <!-- 2) Lavadora: tarjeta de control -->
+        <div class="card">
+          <div class="imgbox">
+            <img src="LAV.jpeg" alt="Tarjeta de control de lavadora"> 
+          </div>
+          <div class="caption">Lavadora: reparación de tarjeta de control</div>
+          <p class="desc">
+            Identificación de fallo en la <strong>etapa de alimentación</strong> (rectificación/filtrado) y en componentes de
+            <strong>lógica</strong> (microcontrolador/driver). Restauración de pistas, cambio de capacitores y pruebas de ciclo.
+          </p>
+          <ul class="list">
+            <li>Inspección visual y medición en frío.</li>
+            <li>Reemplazo de componentes y resolder.</li>
+            <li>Validación de programas y estados de la lavadora.</li>
+          </ul>
+        </div>
+
+        <!-- 3) iPad: cambio de pantalla -->
+        <div class="card">
+          <div class="imgbox">
+            <img src="IPAD.jpeg" alt="Cambio de pantalla iPad"> -->
+          </div>
+          <div class="caption">iPad: cambio de pantalla</div>
+          <p class="desc">
+            Sustitución de <strong>panel frontal</strong> (digitizer/LCD según modelo), limpieza de adhesivos, reinstalación de
+            <strong>flex</strong> y verificación de <strong>táctil</strong>, brillo y color. Cierre con adhesivo OEM y pruebas finales.
+          </p>
+          <ul class="list">
+            <li>Calentamiento controlado para despegar sin dañar.</li>
+            <li>Revisión de conectores y tornillería.</li>
+            <li>Prueba de tacto y display post‑ensamble.</li>
+          </ul>
+        </div>
+
+        <!-- 4) PC: mantenimiento (pasta térmica + RAM) -->
+        <div class="card">
+          <div class="imgbox"> <img src="PASTA.png" > 
+          </div>
+          <div class="caption">PC: mantenimiento preventivo</div>
+          <p class="desc">
+            Limpieza interna, reemplazo de <strong>pasta térmica</strong> del CPU, reordenamiento de cableado y ampliación de
+            <strong>memoria RAM</strong>. Prueba de temperaturas, estabilidad y rendimiento con utilidades de estrés.
+          </p>
+          <ul class="list">
+            <li>Limpieza de polvo y revisión de ventiladores.</li>
+            <li>Aplicación de pasta térmica y montaje del disipador.</li>
+            <li>Instalación de módulos RAM y prueba <em>POST</em>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Observaciones generales -->
+    <section class="section">
+      <h2>Observaciones</h2>
+      <p>
+        En todos los casos se realizaron pruebas funcionales y verificación de seguridad antes de la entrega:
+        aislamiento, protección de usuario y comportamiento térmico. Se documentó el proceso con evidencias
+        fotográficas (4 fotos) para el portafolio.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    © <span id="y"></span> Amisadai Bautista — Reparación y Mantenimiento
+  </footer>
+
+  <script>
+    // Año dinámico
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
