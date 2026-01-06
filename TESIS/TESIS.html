@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Implementación de un sistema de recopilación de datos en el monitoreo de cuerpos hídricos</title>
+  <meta name="description" content="Portafolio del proyecto de titulación: monitoreo de calidad de agua con sensores multiparamétricos, ESP32, LoRa, GPS, microSD y visualización en la nube con predicción." />
+
+  <!-- Estilo oscuro minimalista consistente con index.html y 1/1.html -->
+  <style>
+    :root{
+      --bg:#0d0d0d;        /* Fondo */
+      --fg:#e6e6e6;        /* Texto principal */
+      --muted:#b3b3b3;     /* Texto tenue */
+      --accent:#4da6ff;    /* Azul para enlaces y acentos */
+      --card:#111111;      /* Tarjetas */
+      --border:#1f1f1f;    /* Bordes sutiles */
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0; background:var(--bg); color:var(--fg); font-family:Arial,system-ui,Segoe UI,Roboto,sans-serif}
+
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .wrap{max-width:1100px; margin:0 auto; padding:24px}
+    header{padding:56px 20px 16px; text-align:center; border-bottom:1px solid #222}
+    .title{font-size:clamp(24px,4vw,36px); font-weight:300; margin:0}
+    .subtitle{color:#999; font-weight:300; margin-top:6px}
+
+    .badge{
+      display:inline-block; padding:6px 10px; border:1px solid var(--border);
+      border-radius:999px; margin:6px 6px 0 0; color:#aaa; font-size:12px
+    }
+
+    .top-actions{display:flex; justify-content:center; gap:12px; margin-top:14px}
+    .btn{
+      display:inline-block; padding:10px 12px; border:1px solid var(--border);
+      border-radius:6px; color:#bbb; background:#101010
+    }
+    .btn:hover{border-color:#444}
+
+    .card{
+      background:var(--card); border:1px solid var(--border); border-radius:8px;
+      padding:20px; margin:14px 0
+    }
+    .card h2{font-weight:300; color:#cfcfcf; margin:0 0 8px 0; font-size:clamp(18px,2.5vw,24px)}
+    .card h3{font-weight:300; color:#cfcfcf; margin:14px 0 6px; font-size:clamp(16px,2.2vw,20px)}
+    .card p{color:#ddd; line-height:1.6; margin:8px 0}
+
+    .grid{display:grid; gap:14px}
+    .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width:860px){ .grid.cols-2,.grid.cols-3{grid-template-columns:1fr} }
+
+    .row{display:flex; gap:14px; flex-wrap:wrap}
+    .row .card{flex:1 1 310px}
+
+    .imgbox{
+      background:#0c0c0c; border:1px dashed var(--border); border-radius:8px;
+      padding:10px; display:flex; align-items:center; justify-content:center; min-height:180px
+    }
+    .imgbox img{max-width:100%; border-radius:6px}
+
+    .tag{
+      display:inline-block; padding:6px 8px; background:transparent; border:1px solid var(--border);
+      border-radius:8px; margin:4px 6px 0 0; font-size:12px; color:#aaa
+    }
+    .muted{color:var(--muted)}
+    .small{font-size:12px; color:#9c9c9c}
+
+    .footer{padding:24px 0; color:#777; font-size:14px; text-align:center; border-top:1px solid #222; margin-top:32px}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="title">Implementación de un sistema de recopilación de datos en el monitoreo de cuerpos hídricos</div>
+      <div class="subtitle">Portafolio profesional · Amisadai Bautista Sánchez · ESIME Zacatenco (IPN)</div>
+
+      <div class="top-actions">
+        <a  href="../index.html">← Volver al Portafolio</a>
+      </div>
+
+      <div style="margin-top:12px">
+        <span class="badge">IoT</span>
+        <span class="badge">LoRa (915 MHz)</span>
+        <span class="badge">ESP32</span>
+        <span class="badge">Sensores multiparamétricos</span>
+        <span class="badge">GPS NEO‑6M</span>
+        <span class="badge">MicroSD</span>
+        <span class="badge">Dashboard en la nube</span>
+        <span class="badge">Regresión lineal</span>
+      </div>
+    </header>
+
+    <!-- Objetivo del proyecto -->
+    <section class="card">
+      <h2>Objetivo del proyecto</h2>
+      <p>
+        Desarrollar un sistema <strong>autónomo y de bajo costo</strong> para el <strong>monitoreo de calidad de agua</strong> en tiempo (casi) real, integrando sensores de
+        <strong>pH</strong>, <strong>turbidez</strong>, <strong>TDS</strong>, <strong>temperatura</strong> y <strong>conductividad</strong> (estimada desde TDS),
+        con procesamiento local en <strong>ESP32</strong>, transmisión <strong>LoRa</strong>, georreferenciación con <strong>GPS NEO‑6M</strong>,
+        <strong>almacenamiento en MicroSD</strong> y visualización en la nube; además, se incluye un <strong>algoritmo de predicción</strong>
+        (regresión lineal) para identificar tendencias.
+      </p>
+    </section>
+
+    <!-- Arquitectura del sistema -->
+    <section class="card">
+      <h2>Arquitectura y flujo</h2>
+      <div class="row">
+        <div class="card">
+          <h3>Nodo sensor (embebido)</h3>
+          <ul>
+            <li>ESP32 LoRa SX1276 · ADC 12‑bits + OneWire · DeepSleep cíclico</li>
+            <li>Sensores: pH (PH‑4502C), Turbidez (SEN0189), TDS (SEN0244), Temperatura (DS18B20)</li>
+            <li>Antena SMA 3 dBi</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Comunicación y visualización</h3>
+          <ul>
+            <li>Enlace <strong>LoRa P2P</strong> para larga distancia y bajo consumo</li>
+            <li><strong>Nube</strong> (p. ej., ThingSpeak) para almacenamiento/visualización</li>
+            <li><strong>Predicción</strong>: regresión lineal básica para tendencias (pH, TDS)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Componentes y funciones -->
+    <section class="card">
+      <h2>Integración técnica</h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>Adquisición</h3>
+          <p>Lectura analógica y digital con filtrado y promediado; compensación por temperatura en TDS.</p>
+          <span class="tag">ADC (ESP32)</span>
+          <span class="tag">1‑Wire</span>
+          <span class="tag">SPI / UART</span>
+        </div>
+        <div class="card">
+          <h3>Transmisión</h3>
+          <p>LoRa 915 MHz, parámetros optimizados para equilibrio de alcance y consumo.</p>
+          <span class="tag">LoRa (SX1276)</span>
+          <span class="tag">SMA 3 dBi</span>
+        </div>
+        <div class="card">
+          <h3>Persistencia</h3>
+          <p>Registro redundante en MicroSD + publicación en la nube; georreferenciación con GPS.</p>
+          <span class="tag">MicroSD</span>
+          <span class="tag">GPS NEO‑6M</span>
+          <span class="tag">Cloud Dashboard</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Galería / imágenes -->
+    <section class="card">
+      <h2>Galería del proyecto</h2>
+      <div class="grid cols-3">
+        <div class="imgbox">
+          <img src="CAJA.png" alt="Diseño de caja de acero inoxidable" />
+        </div>
+        <div class="imgbox">
+          <img src="PCB.png" alt="PCB del sistema" />
+        </div>
+        <div class="imgbox">
+          <img src="MON.png" alt="Montaje del prototipo" />
+        </div>
+        <div class="imgbox">
+          <img src="ANTENA.png" alt="Antena LoRa y pruebas de alcance" />
+        </div>
+        <div class="imgbox">
+          <img src="NUBE.png" alt="Visualización en la nube: dashboard" />
+        </div>
+        <div class="imgbox">
+          <img src="CHA.png" alt="Pruebas de campo con georreferenciación" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Resultados destacados -->
+    <section class="card">
+      <h2>Resultados y validación</h2>
+      <ul>
+        <li>Operación estable del nodo: adquisición periódica, transmisión LoRa y respaldo en MicroSD.</li>
+        <li>Tendencias y predicción con <strong>regresión lineal</strong> (pH/TDS) para anticipar desviaciones.</li>
+        <li>Comparación frente a referencias de laboratorio y normativas (NOM‑127‑SSA1‑2021/OMS) en pruebas controladas y de campo.</li>
+      </ul>
+    </section>
+
+    <div class="footer">
+      © <span id="y"></span> Amisadai Bautista Sánchez · Portafolio del Proyecto de Titulación
+    </div>
+  </main>
+
+  <script>
+    // Año dinámico en el pie de página
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
