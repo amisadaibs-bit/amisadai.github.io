@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Antenas | Amisadai Bautista</title>
+
+  <!-- Estilo oscuro coherente con el portafolio -->
+  <style>
+    :root{
+      --bg:#0d0d0d; --fg:#e6e6e6; --muted:#b3b3b3; --accent:#4da6ff;
+      --card:#111111; --border:#1f1f1f;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0; background:var(--bg); color:var(--fg); font-family:Arial,system-ui,Segoe UI,Roboto,sans-serif}
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    header{padding:56px 20px; text-align:center; border-bottom:1px solid #222}
+    .title{font-size:clamp(24px,4vw,36px); font-weight:300; margin:0}
+    .subtitle{color:#999; font-weight:300; margin-top:6px}
+
+    .wrap{max-width:1100px; margin:0 auto; padding:24px}
+    .badge{display:inline-block; padding:6px 10px; border:1px solid var(--border); border-radius:999px; margin:6px 6px 0 0; color:#aaa; font-size:12px}
+
+    .top-actions{display:flex; justify-content:center; gap:12px; margin-top:14px}
+    .btn{display:inline-block; padding:10px 12px; border:1px solid var(--border); border-radius:6px; color:#bbb; background:#101010}
+    .btn:hover{border-color:#444}
+
+    .section{background:var(--card); border:1px solid var(--border); border-radius:8px; padding:20px; margin:14px 0}
+    .section h2{font-weight:300; color:#cfcfcf; margin:0 0 8px 0; font-size:clamp(18px,2.5vw,24px)}
+    .section h3{font-weight:300; color:#cfcfcf; margin:14px 0 6px; font-size:clamp(16px,2.2vw,20px)}
+    .section p{color:#ddd; line-height:1.6; margin:8px 0}
+    .muted{color:#b3b3b3}
+    .small{font-size:12px; color:#9c9c9c}
+
+    .grid{display:grid; gap:16px}
+    .cols-2{grid-template-columns:repeat(2,1fr)}
+    .cols-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width:860px){ .cols-2,.cols-3{grid-template-columns:1fr} }
+
+    .card{background:#101010; border:1px solid var(--border); border-radius:8px; padding:16px}
+    .imgbox{
+      background:#0c0c0c; border:1px dashed var(--border); border-radius:8px;
+      padding:10px; display:flex; align-items:center; justify-content:center; min-height:180px; color:#aaa
+    }
+    .imgbox img{max-width:100%; border-radius:6px}
+    .code{font-family:ui-monospace,Menlo,Consolas,monospace; background:#0a0a0a; border:1px solid #1a1a1a; border-radius:6px; padding:10px; color:#d9d9d9; overflow:auto}
+    .list{margin:8px 0 4px 20px}
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="title">Antenas</h1>
+    <h2 class="subtitle">Yagi · Log‑periódica · Microcinta · Fractal — Patron de radiación y fundamentos</h2>
+
+    <div class="top-actions">
+      <!-- Botón de regreso -->
+      <a class="btn" href="../index.html">← Volver al Portafolio</a>
+    </div>
+
+    <div style="margin-top:10px">
+      <span class="badge">Ganancia</span>
+      <span class="badge">Impedancia &amp; Acople</span>
+      <span class="badge">Patrón de radiación</span>
+      <span class="badge">Diseño práctico</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- Resumen -->
+    <section class="section">
+      <h2>Resumen</h2>
+      <p>
+        Página de referencia para cuatro familias de antenas: <strong>Yagi‑Uda</strong>, <strong>log‑periódica</strong> (a veces llamada “logarítmica”),
+        <strong>microcinta (microstrip)</strong> y <strong>fractal</strong>. Incluye notas cortas de teoría, cómo estimar la <strong>ganancia</strong> y
+        opciones de <strong>acople de impedancia</strong>. Se muestra el <strong>patrón de radiación</strong> de una Yagi a modo de ejemplo.
+      </p>
+    </section>
+
+    <!-- Patrón de radiación (uno) -->
+    <section class="section">
+      <h2>Patrón de radiación (ejemplo: Yagi‑Uda)</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <div class="imgbox">
+            <!-- Reemplaza con tu imagen del patrón 2D/3D -->
+            <!-- img/yagi_patron_radiacion.png -->
+            [Patrón de radiación — Yagi]
+          </div>
+          <p class="small muted">Patrón directivo con lóbulo principal al frente, lóbulos laterales reducidos y lóbulo trasero (back‑lobe) controlado por el reflector.</p>
+        </div>
+        <div class="card">
+          <h3>Notas del patrón</h3>
+          <ul class="list">
+            <li><strong>Ancho de haz (HPBW)</strong> se relaciona inversamente con la ganancia/directividad.</li>
+            <li><strong>Back‑lobe</strong> disminuye con reflector más largo/ajustado.</li>
+            <li>Más directores → mayor ganancia, menor ancho de haz (hasta límites prácticos).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Teoría corta: Ganancia e impedancia -->
+    <section class="section">
+      <h2>Fundamentos cortos: ganancia y acople</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Ganancia (G)</h3>
+          <p>
+            La ganancia de una antena combina <strong>directividad (D)</strong> y <strong>eficiencia (η)</strong>: 
+          </p>
+          <pre class="code">G = η · D   (en unidades lineales)
+G_dBi = 10 · log10(G)</pre>
+          <p>
+            En arreglos (arrays), el aumento de ganancia proviene del <strong>factor de arreglo</strong> y la suma coherente de elementos:
+          </p>
+          <pre class="code">D_array ≈ D_elemento · N · k_arreglo
+(idealmente ~N, pero la eficiencia de excitación y el espaciamiento determinan k_arreglo)</pre>
+          <p class="small muted">Regla práctica: más elementos directores/longitud eléctrica → mayor directividad, pero cuida pérdidas y desadaptación.</p>
+        </div>
+        <div class="card">
+          <h3>Acople de impedancia</h3>
+          <p>
+            El objetivo es <strong>minimizar VSWR</strong> entre línea (p.ej., 50 Ω) y antena. Métodos habituales:
+          </p>
+          <ul class="list">
+            <li><strong>Gamma‑match</strong> / <strong>beta‑match</strong> en Yagi: ajusta reactancia y resistencia del dipolo excitado.</li>
+            <li><strong>Balun</strong> (1:1, 1:4): balancea/desbalancea y transforma impedancia (corrige corrientes de vaina).</li>
+            <li><strong>Transformador de ¼ λ</strong> (línea): 
+              <pre class="code">Z_match = √(Z_ant · Z_line)</pre>
+            </li>
+            <li><strong>Redes LC</strong> (L, π, T): sintonía en banda estrecha.</li>
+            <li><strong>Microstrip</strong>: ajustar ancho <em>w</em> y sustrato (ε_r, h) para lograr 50 Ω en el “feed”.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Antena Yagi -->
+    <section class="section">
+      <h2>Yagi‑Uda (directiva en banda estrecha)</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <p>
+            Consta de <strong>reflector</strong>, <strong>dipolo excitado</strong> y varios <strong>directores</strong>. Ofrece alta directividad con
+            ancho de haz estrecho y lóbulo trasero reducido. La ganancia crece con el número de directores (hasta un punto óptimo).
+          </p>
+          <ul class="list">
+            <li>Optimización geométrica: longitudes y separaciones en fracciones de λ.</li>
+            <li>Acople típico: <strong>gamma‑match</strong> + <strong>balun</strong> 1:1.</li>
+            <li>Uso: TV, radio, enlaces punto‑punto, VHF/UHF.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="imgbox">
+            <!-- img/yagi_foto.jpg -->
+            [Foto/Render — Yagi]
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Antena Log-periódica -->
+    <section class="section">
+      <h2>Log‑periódica (logarítmica) — ancha banda</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <p>
+            Con elementos cuyas dimensiones siguen una <strong>progresión geométrica</strong> para mantener respuesta similar en una
+            amplia banda de frecuencias. Es menos directiva que una Yagi de igual tamaño, pero <strong>cubre bandas grandes</strong>.
+          </p>
+          <ul class="list">
+            <li>Parámetros de escala: τ (tau) y σ (sigma) definen el “zoom” entre elementos.</li>
+            <li>Impedancia y VSWR relativamente estables en banda.</li>
+            <li>Uso: mediciones EMI, comunicaciones multi‑banda.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="imgbox">
+            <!-- img/log_periodica.jpg -->
+            [Foto/Render — Log‑periódica]
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Antena Microcinta -->
+    <section class="section">
+      <h2>Microcinta (microstrip) — compacta y planar</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <p>
+            Antena planar sobre sustrato dieléctrico (FR‑4, Rogers, etc.). Fácil de integrar, bajo perfil, pero <strong>banda estrecha</strong>
+            y menor eficiencia en sustratos de pérdidas. La <strong>impedancia de línea</strong> depende de <em>w/h</em> y <em>ε_r</em>.
+          </p>
+          <div class="code">
+Z₀_microstrip ≈ f(w/h, ε_r)
+
+Reglas rápidas:
+- Aumentar w → bajar Z₀ (acercarse a 50 Ω).
+- Sustratos con menor ε_r → mayor velocidad de fase y mayor Z₀.
+- Mayor h → mayor campo en aire, afecta Z₀ y radiación parásita.
+          </div>
+          <ul class="list">
+            <li>Feeds comunes: <em>microstrip line</em>, <em>coaxial probe</em>, <em>aperture‑coupled</em>.</li>
+            <li>Acople: ajuste fino de <em>w</em> y “matching network” en PCB.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="imgbox">
+            <!-- img/microcinta_patch.jpg -->
+            [Foto/Render — Patch microstrip]
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Antena Fractal -->
+    <section class="section">
+      <h2>Fractal — miniaturización y multibanda</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <p>
+            Geometrías fractales (Koch, Sierpinski, Hilbert…) permiten <strong>longitudes eléctricas efectivas mayores</strong en
+            <strong>áreas pequeñas</strong>, habilitando respuesta <strong>multibanda</strong> o miniaturización con compromiso en eficiencia y
+            facilidad de ajuste.
+          </p>
+          <ul class="list">
+            <li>Multirresonancias por autosimilaridad.</li>
+            <li>Acople por línea/transformadores de impedancia integrados en patrón.</li>
+            <li>Uso: dispositivos portátiles, IoT.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="imgbox">
+            <!-- img/fractal_antenna.jpg -->
+            [Foto/Render — Fractal]
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mini guía de cálculo de ganancia (práctico) -->
+    <section class="section">
+      <h2>Mini‑guía: estimar ganancia (práctico)</h2>
+      <p>
+        En ausencia de simulación EM (HFSS/CST/4NEC2), una aproximación es combinar directividad teórica y pérdidas:
+      </p>
+      <pre class="code">G_dBi ≈ 10·log10(D_teórica · η_total)
+
+η_total ≈ η_conducción · η_dieléctrica · η_radiación · η_matching
+      </pre>
+      <ul class="list">
+        <li><strong>Yagi</strong>: catálogos y curvas empíricas dan ~7–13 dBi según nº de directores y boom.</li>
+        <li><strong>Log‑periódica</strong>: típicamente 6–10 dBi con banda amplia.</li>
+        <li><strong>Microcinta</strong>: patch sencillo 5–7 dBi; arreglos mayores → más ganancia.</li>
+        <li><strong>Fractal</strong>: la ganancia varía mucho (multibanda/miniaturizada → eficiencia menor).</li>
+      </ul>
+      <p class="small muted">Ajusta la ganancia final restando pérdidas por desadaptación: <em>G_ef ≈ G_diseño − 10·log10(1−|Γ|²)</em>, donde Γ es el coeficiente de reflexión (VSWR).</p>
+    </section>
+
+    <!-- Mini guía de matching -->
+    <section class="section">
+      <h2>Mini‑guía: acople de impedancia</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Yagi / Log‑periódica</h3>
+          <ul class="list">
+            <li>Dipolo excitado ajustado a 50–75 Ω (longitud, separación al boom).</li>
+            <li>Gamma‑match (barra + capacitor serie) y <strong>balun 1:1</strong> para suprimir corrientes de vaina.</li>
+            <li>Transformador de cuarto de onda en coax si la antena está en ~75 Ω y el equipo en 50 Ω.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Microcinta / Fractal</h3>
+          <ul class="list">
+            <li>Diseñar <strong>línea de 50 Ω</strong>: ajustar <em>w</em> según <em>h</em> y <em>ε_r</em> del sustrato.</li>
+            <li>Uso de “<em>inset‑feed</em>” (ranura de inserción) para igualar resistencia de entrada del patch.</li>
+            <li>Redes LC o transformadores de impedancia impresos (secciones de línea) para banda estrecha.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    © <span id="y"></span> Amisadai Bautista — Antenas
+  </footer>
+
+  <script>
+    // Año dinámico
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
