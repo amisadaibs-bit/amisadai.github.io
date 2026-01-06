@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Diseño y Construcción de PCB | Amisadai Bautista</title>
+
+  <style>
+    :root{
+      --bg:#0d0d0d; --fg:#e6e6e6; --muted:#b3b3b3; --card:#111; --border:#1f1f1f; --accent:#4da6ff;
+    }
+    html,body{background:var(--bg); color:var(--fg); margin:0; font-family:Arial,system-ui,Segoe UI,Roboto,sans-serif}
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{padding:56px 20px; text-align:center; border-bottom:1px solid #222}
+    .title{font-size:2.4rem; font-weight:300; margin:0}
+    .subtitle{color:#999; font-weight:300; margin-top:6px}
+    .container{max-width:940px; margin:32px auto; padding:0 20px}
+    .section{background:var(--card); border:1px solid var(--border); border-radius:8px; padding:20px; margin-bottom:22px}
+    .section h2{font-weight:300; color:#cfcfcf; margin:0 0 8px 0; font-size:1.6rem}
+    .section h3{font-weight:300; color:#cfcfcf; margin:14px 0 6px; font-size:1.2rem}
+    .section p{color:#ddd; line-height:1.6; margin:8px 0}
+    .muted{color:#b3b3b3}
+    .grid{display:grid; gap:14px}
+    .cols-2{grid-template-columns:repeat(2,1fr)}
+    .cols-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width:860px){ .cols-2,.cols-3{grid-template-columns:1fr} }
+    .imgbox{border:1px dashed var(--border); border-radius:8px; min-height:140px; display:flex; align-items:center; justify-content:center; background:#0c0c0c}
+    .imgbox img{max-width:100%; border-radius:6px}
+    .badge{display:inline-block; border:1px solid var(--border); border-radius:999px; padding:6px 10px; font-size:12px; color:#aaa; margin-right:6px}
+    .list{margin:8px 0 6px 18px}
+    .code{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background:#0a0a0a; border:1px solid #1a1a1a; border-radius:6px; padding:10px; color:#d9d9d9}
+    .row{display:flex; gap:12px; flex-wrap:wrap}
+    .row .section{flex:1 1 320px}
+    .footer{padding:40px 0; color:#777; font-size:.9rem; text-align:center; border-top:1px solid #222; margin-top:42px}
+    .top-actions{display:flex; justify-content:center; gap:12px; margin-top:12px}
+    .btn{display:inline-block; padding:10px 12px; border:1px solid var(--border); border-radius:6px; color:#bbb}
+    .btn:hover{border-color:#444}
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="title">Diseño y Construcción de PCB</h1>
+    <h2 class="subtitle">Integración embebida para monitoreo multiparamétrico</h2>
+    <div class="top-actions">
+      <!-- Enlace de retorno (opcional) -->
+      <a class="btn" href="../index.html">← Volver al Portafolio</a>
+    </div>
+    <div style="margin-top:10px">
+      <span class="badge">ESP32 LoRa SX1276</span>
+      <span class="badge">ADC/OneWire/SPI/UART</span>
+      <span class="badge">Filtros &amp; Desacople</span>
+      <span class="badge">GPS NEO‑6M</span>
+      <span class="badge">MicroSD</span>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Resumen -->
+    <section class="section">
+      <h2>Resumen</h2>
+      <p>
+        Esta PCB integra en una sola placa el <strong>ESP32 LoRa SX1276</strong>, los sensores de
+        <strong>pH (PH‑4502C)</strong>, <strong>turbidez (SEN0189)</strong>, <strong>TDS (SEN0244)</strong> y <strong>temperatura (DS18B20)</strong>,
+        además del <strong>GPS NEO‑6M</strong> y un <strong>lector MicroSD</strong>. El diseño prioriza la
+        <em>estabilidad analógica</em>, la <em>separación de dominios</em> y la <em>compatibilidad de buses</em> para
+        transmisión, registro y georreferenciación de datos.
+      </p>
+      <div class="imgbox">
+        <img src="PCB.png" alt="Vista principal de la PCB"> 
+      </div>
+    </section>
+
+    <!-- Objetivos y Alcance -->
+    <section class="section">
+      <h2>Objetivos de diseño</h2>
+      <ul class="list">
+        <li>Unificar adquisición, transmisión LoRa y almacenamiento local en una <strong>placa compacta</strong>.</li>
+        <li>Garantizar <strong>bajo ruido</strong> en señales analógicas mediante filtrado y disposición física.</li>
+        <li>Evitar colisiones y <strong>interferencias de buses</strong> usando SPI dedicados para LoRa/MicroSD y UART aislada para GPS.</li>
+        <li>Facilitar el <strong>ensamble y mantenimiento</strong> (conectores BNC, headers y SMA).</li>
+      </ul>
+    </section>
+
+    <!-- Arquitectura y Bloques -->
+    <section class="section">
+      <h2>Arquitectura de la PCB</h2>
+      <div class="grid cols-2">
+        <div>
+          <h3>Bloques funcionales</h3>
+          <ul class="list">
+            <li><strong>ESP32</strong> con LoRa SX1276 (P2P, 915 MHz).</li>
+            <li><strong>Entradas analógicas</strong>: pH, turbidez, TDS (ADC de 12 bits, atenuación apropiada).</li>
+            <li><strong>Temperatura</strong>: DS18B20 (OneWire, pull‑up 4.7 kΩ).</li>
+            <li><strong>GPS</strong>: NEO‑6M (UART1 dedicada).</li>
+            <li><strong>MicroSD</strong>: SPI dedicado para registro redundante.</li>
+            <li><strong>Alimentación y protección</strong>: regulador DC/DC, diodo Schottky, zener y fusible.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Asignación de puertos y buses</h3>
+          <ul class="list">
+            <li><strong>ADC1</strong> reservado para analógico sensible (pH, turbidez, TDS).</li>
+            <li><strong>OneWire</strong> para DS18B20 (GPIO con pull‑up).</li>
+            <li><strong>VSPI</strong> para LoRa (SCK/MOSI/MISO/CS + RST/DIO).</li>
+            <li><strong>HSPI</strong> para MicroSD (SCK/MOSI/MISO/CS, velocidad moderada).</li>
+            <li><strong>UART1</strong> para GPS (RX/TX independientes de la UART de debug).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="imgbox" style="margin-top:12px">
+        <img src="BLOQUES.png" alt="Esquemático eléctrico de la PCB"> 
+      </div>
+    </section>
+
+    <!-- Consideraciones de Diseño -->
+    <section class="section">
+      <h2>Consideraciones de diseño</h2>
+      <div class="grid cols-2">
+        <div>
+          <h3>Separación analógico/digital</h3>
+          <p>
+            Se implementan <strong>planos de tierra</strong> diferenciados (AGND/DGND) y rutas cortas para retorno.
+            La disposición física evita que la conmutación digital se acople a las entradas analógicas.
+          </p>
+          <h3>Filtros pasabajas en ADC</h3>
+          <p>
+            En cada entrada analógica se usa un filtro RC (<em>p. ej.</em> R≈1 kΩ, C≈100 nF),
+            con <em>f<sub>c</sub> ≈ 1.6 kHz</em>, suficiente para atenuar alta frecuencia y preservar la componente útil.
+          </p>
+        </div>
+        <div>
+          <h3>Desacople y estabilidad</h3>
+          <p>
+            Se colocan <strong>100 nF cerámicos</strong> cerca de cada IC y <strong>10–100 µF</strong> en nodos de energía.
+            Se minimizan bucles de masa y se refuerza el plano de alimentación.
+          </p>
+          <h3>Protecciones eléctricas</h3>
+          <p>
+            Entrada con <strong>diodo Schottky</strong> para evitar retorno de corriente,
+            <strong>diodo zener</strong> para sobrevoltaje y <strong>fusible</strong> en la línea principal.
+          </p>
+        </div>
+      </div>
+
+      <div class="imgbox" style="margin-top:12px">
+        <img src="TIE.jpg" alt="Ruteo top/bottom de la PCB"> 
+      </div>
+    </section>
+
+    <!-- Materiales, capas y conectores -->
+    <section class="section">
+      <h2>Materiales y conectores</h2>
+      <ul class="list">
+        <li><strong>Sustrato</strong>: FR‑4, cobre 1 oz (≈35 µm).</li>
+        <li><strong>Capas</strong>: 2 capas con plano de tierra y vías de retorno cortas.</li>
+        <li><strong>Conectores</strong>: BNC para electrodo de pH, headers para sondas y <strong>SMA</strong> para antena LoRa.</li>
+        <li><strong>Regulador DC/DC</strong> y bloque de alimentación aislado del dominio analógico.</li>
+      </ul>
+
+    </section>
+
+    <!-- Cálculo de ancho de pista -->
+    <section class="section">
+      <h2>Cálculo de ancho de pista (resumen práctico)</h2>
+      <p>
+        Para cobre de <strong>35 µm</strong> y corrientes de señal, un ancho de <strong>≥0.30 mm</strong> mantiene
+        caída de tensión y disipación despreciables; las líneas de potencia y masa se refuerzan con
+        <strong>plano de cobre</strong> y anchos superiores donde es necesario.
+      </p>
+      <pre class="code">Ejemplo de criterio:
+- Señal analógica / digital: ≥0.30 mm
+- Alimentación local: 0.50–0.80 mm
+- Plano de masa: cubrir zonas críticas, vías de retorno cortas</pre>
+    </section>
+
+    <!-- Flujo de diseño y fabricación -->
+    <section class="section">
+      <h2>Flujo de diseño y fabricación</h2>
+      <div class="grid cols-2">
+        <div>
+          <h3>Flujo</h3>
+          <ol class="list">
+            <li>Esquemático por bloques (sensores, radio, GPS, MicroSD, energía).</li>
+            <li>Definición de reglas (DRC/ERC) y librerías de componentes.</li>
+            <li>Ubicación estratégica (ruido, rutas críticas, longitudes y buses).</li>
+            <li>Ruteo por prioridades (RF/energía → analógico → digital).</li>
+            <li>Planos de masa, desacople y filtros; revisión final.</li>
+            <li>Generación de <em>Gerbers</em> y envío a fabricación.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Pruebas</h3>
+          <ul class="list">
+            <li>Continuidad y ausencia de cortos.</li>
+            <li>Verificación de ADC con señales conocidas y cargas equivalentes.</li>
+            <li>Prueba simultánea de <strong>LoRa</strong>, <strong>GPS</strong> y <strong>MicroSD</strong> (sin colisiones de bus).</li>
+            <li>Validación en banco y campo (estabilidad, ruido y adquisición).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="imgbox" style="margin-top:12px">
+       <img src="MON.png" alt="Fabricación y pruebas del prototipo">
+      </div>
+    </section>
+
+    <!-- Resultados y Conclusión -->
+    <section class="section">
+      <h2>Resultados y conclusión</h2>
+      <p>
+        La PCB cumple la integración multiparamétrica y la arquitectura embebida planteada:
+        <strong>minimiza interferencias</strong>, asegura <strong>lecturas confiables</strong> en pH/turbidez/TDS/temperatura,
+        y soporta <strong>transmisión LoRa</strong>, <strong>GPS</strong> y <strong>MicroSD</strong> para registro y visualización posterior.
+      </p>
+      <p class="muted">Para tu portafolio, añade capturas del dashboard y mapas GPS como evidencia complementaria.</p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    © 2026 Amisadai Bautista — Diseño y Construcción de PCB
+  </footer>
+
+</body>
+</html>
