@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Automatización | Amisadai Bautista</title>
+
+  <!-- Estilo oscuro coherente con index.html y 1/1.html -->
+  <style>
+    :root{
+      --bg:#0d0d0d; --fg:#e6e6e6; --muted:#b3b3b3; --accent:#4da6ff;
+      --card:#111111; --border:#1f1f1f;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0; background:var(--bg); color:var(--fg); font-family:Arial,system-ui,Segoe UI,Roboto,sans-serif}
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    header{padding:56px 20px; text-align:center; border-bottom:1px solid #222}
+    .title{font-size:clamp(24px,4vw,36px); font-weight:300; margin:0}
+    .subtitle{color:#999; font-weight:300; margin-top:6px}
+
+    .top-actions{display:flex; justify-content:center; gap:12px; margin-top:14px}
+    .btn{display:inline-block; padding:10px 12px; border:1px solid var(--border); border-radius:6px; color:#bbb; background:#101010}
+    .btn:hover{border-color:#444}
+
+    .wrap{max-width:1100px; margin:0 auto; padding:24px}
+    .badge{display:inline-block; padding:6px 10px; border:1px solid var(--border); border-radius:999px; margin:6px 6px 0 0; color:#aaa; font-size:12px}
+
+    .section{background:var(--card); border:1px solid var(--border); border-radius:8px; padding:20px; margin:14px 0}
+    .section h2{font-weight:300; color:#cfcfcf; margin:0 0 8px 0; font-size:clamp(18px,2.5vw,24px)}
+    .section h3{font-weight:300; color:#cfcfcf; margin:14px 0 6px; font-size:clamp(16px,2.2vw,20px)}
+    .section p{color:#ddd; line-height:1.6; margin:8px 0}
+    .muted{color:var(--muted)}
+    .small{font-size:12px; color:#9c9c9c}
+
+    .grid{display:grid; gap:14px}
+    .cols-2{grid-template-columns:repeat(2,1fr)}
+    .cols-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width:860px){ .cols-2,.cols-3{grid-template-columns:1fr} }
+
+    .row{display:flex; gap:14px; flex-wrap:wrap}
+    .row .section{flex:1 1 310px}
+
+    .imgbox{
+      background:#0c0c0c; border:1px dashed var(--border); border-radius:8px;
+      padding:10px; display:flex; align-items:center; justify-content:center; min-height:160px; color:#aaa
+    }
+    .imgbox img{max-width:100%; border-radius:6px}
+
+    .list{margin:8px 0 4px 20px}
+    .code{font-family:ui-monospace,Menlo,Consolas,monospace; background:#0a0a0a; border:1px solid #1a1a1a; border-radius:6px; padding:10px; color:#d9d9d9}
+
+    .footer{padding:40px 0; color:#777; font-size:.9rem; text-align:center; border-top:1px solid #222; margin-top:42px}
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="title">Automatización</h1>
+    <h2 class="subtitle">Práctica de PID (overview) y desarrollo con PLC (Siemens S7‑300, STEP 7, WinCC)</h2>
+    <div class="top-actions">
+      <!-- Enlace de retorno (opcional) -->
+      <a class="btn" href="../index.html">← Volver al Portafolio</a>
+    </div>
+    <div style="margin-top:10px">
+      <span class="badge">PID</span>
+      <span class="badge">PLC · Siemens S7‑300</span>
+      <span class="badge">MPI · PROFIBUS · PROFINET</span>
+      <span class="badge">STEP 7 · Ladder</span>
+      <span class="badge">FluidSIM (Festo)</span>
+      <span class="badge">WinCC Flexible (HMI)</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- Práctica breve: PID -->
+    <section class="section">
+      <h2>Práctica de control PID (visión general)</h2>
+      <p>
+        Se implementó y probó un esquema PID básico en entorno didáctico para familiarizarse con la
+        <em>sintonización</em> y el <em>comportamiento dinámico</em> (P: rapidez, I: eliminación de error estacionario,
+        D: amortiguamiento/anticipación). La práctica se enfocó en <strong>definir setpoints</strong>, observar
+        <strong>respuesta al escalón</strong> y ajustar <strong>ganancias</strong> con criterios simples (Ziegler‑Nichols
+        empírico y ajuste fino por prueba‑error), preparando el salto hacia la automatización con PLC donde
+        se requirió control secuencial y supervisión. <!-- (sin evidencia gráfica por solicitud) -->
+      </p>
+        <img src="PID.jpeg"> 
+      <p class="small muted">Tras esta práctica introductoria, el trabajo se centró en PLC: levantamiento técnico, configuración de redes, programación Ladder y HMI.</p>
+    </section>
+
+    <!-- PLC: Levantamiento técnico -->
+    <section class="section">
+      <h2>Levantamiento técnico de la estación (S7‑300)</h2>
+      <p>
+        Se documentaron CPU, módulos de E/S y nodos descentralizados (ET200M/ET200S/ET200U), con
+        identificación de <strong>part numbers Siemens</strong>, <strong>topología</strong> y <strong>ones</strong> en STEP 7 (HW CONFIG).    
+      </p>
+      <div class="grid cols-2">
+        <div>
+          <h3>Topología y nodos</h3>
+          <ul class="list">
+            <li><strong>Nodo 30</strong>: CPU S7‑300 (PS, CPU, DI/DO, interfaces).   </li>
+            <li><strong>ET200M</strong>: AI/DI/DO descentralizadas (IM 153‑2, módulos AI 8×16 bit, etc.).   </li>
+            <li><strong>ET200S</strong>: Banda transportadora (DI/DO 24 VDC).   </li>
+            <li><strong>ET200U</strong>: Relés de acoplamiento (serie S5).   </li>
+          </ul>
+        </div>
+        <div>
+          <h3>Direcciones propuestas</h3>
+          <p>Se redefinieron rangos únicos por nodo (ED/SD y E/S), y se comprimieron bloques DI/DO en ET200S para evitar colisiones.   </p>
+        </div>
+      </div>
+     <div class="imgbox"><img src="NODOS.png"></div>    
+    </section>
+
+    <!-- PLC: Protocolos -->
+    <section class="section">
+      <h2>Protocolos de comunicación: MPI · PROFIBUS · PROFINET</h2>
+      <div class="grid cols-2">
+        <div>
+          <h3>MPI &amp; PROFIBUS</h3>
+          <p>
+            Se configuraron adaptadores PG/PC (USB A2) para pruebas de <strong>MPI</strong> y <strong>PROFIBUS DP</strong>,
+            validando diagnóstico de red y estaciones accesibles desde SIMATIC Manager. 
+          </p>
+        </div>
+        <div>
+          <h3>PROFINET (Ethernet)</h3>
+          <p>
+            Se parametrizó NIC (TCP/IP), se fijó IP de estación y se verificaron <em>nodos conectados</em> vía
+            SIMATIC Manager, integrando comunicación sobre Ethernet industrial.  
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLC: Tabla de variables -->
+    <section class="section">
+      <h2>Tabla de variables y símbolos</h2>
+      <p>
+        Se crearon <strong>símbolos</strong> y <strong>comentarios</strong> para entradas/salidas y marcas, además de
+        <strong>tablas de variables</strong> por función (banda, pulsadores, relés, lámparas, etc.), facilitando
+        monitoreo y simulación en tiempo real. 
+      </p>
+      <div class="grid cols-2">
+        <div class="imgbox">        <img src="TAB.png"> </div>
+        <div class="imgbox"><img src="TAB2.png"></div>
+      </div>
+    </section>
+
+    <!-- Automatismos eléctricos -->
+    <section class="section">
+      <h2>Automatismos eléctricos (Ladder)</h2>
+      <p>
+        Se implementaron funciones FC 110–170 (OB1 como disparador y simulación) para:
+        enclavamiento, temporización, inversión de giro, arranque estrella‑triángulo, inversión con
+        estrella‑triángulo, Dahlander y montacargas. 
+      </p>
+      <div class="grid cols-3">
+        <div class="imgbox"><img src="RE.png"></div>
+        <div class="imgbox"><img src="RE2.png"></div>
+        <div class="imgbox"><img src="RE3.png"></div>
+      </div>
+      <p class="small muted">Se utilizó “Clock memory” para tareas de oscilación/flash en HMI.  </p>
+    </section>
+
+    <!-- Electroneumáticos -->
+    <section class="section">
+      <h2>Electroneumáticos (Festo FluidSIM → Ladder)</h2>
+      <p>
+        Se diseñaron y simularon circuitos de pistón (OR/AND/enclavamiento/retorno por marca/ciclo
+        único–continuo) en FluidSIM y su traducción a ladder (FC200–FC290). 
+      </p>
+      <div class="grid cols-3">
+        <div class="imgbox"><img src="FES1.png"></div>
+        <div class="imgbox"><img src="FES2.png"></div>
+        <div class="imgbox"><img src="FES3.png"></div>
+      </div>
+    </section>
+
+    <!-- HMI -->
+    <section class="section">
+      <h2>HMI en WinCC Flexible</h2>
+      <p>
+        Se diseñaron pantallas para <strong>Mantenimiento</strong> (banda, pulsadores, relés, lámparas, selectores,
+        osciladores) y <strong>Simulación</strong> de ejercicios eléctricos/neumáticos, con control
+        <em>local/remoto</em> desde la HMI y usuarios con niveles de acceso. 
+      </p>
+      <div class="grid cols-3">
+        <div class="imgbox"><img src="1.png"></div>
+        <div class="imgbox"><img src="2.png"></div>
+        <div class="imgbox"><img src="3.png"></div>
+      </div>
+    </section>
+
+    <!-- Resultados y Conclusión -->
+    <section class="section">
+      <h2>Resultados y conclusión</h2>
+      <p>
+        Se consolidó el flujo completo: <strong>levantamiento</strong> → <strong>configuración de redes</strong> → <strong>tabla de
+        variables</strong> → <strong>programación Ladder</strong> → <strong>HMI</strong>, habilitando operación y diagnóstico del sistema
+        en entorno de laboratorio con estaciones enlazadas y secuencias seguras. 
+      </p>
+      <p class="muted small">Los ejercicios secuenciales se validaron en STEP 7 y FluidSIM antes de integrar su interfaz en WinCC.  </p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    © <span id="y"></span> Amisadai Bautista — Automatización
+  </footer>
+
+  <script>
+    // Año dinámico
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
