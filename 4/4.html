@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bobina de Tesla | Amisadai Bautista</title>
+
+  <!-- Estilo oscuro coherente con tu portafolio -->
+  <style>
+    :root{
+      --bg:#0d0d0d; --fg:#e6e6e6; --muted:#b3b3b3; --accent:#4da6ff;
+      --card:#111111; --border:#1f1f1f;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0; background:var(--bg); color:var(--fg); font-family:Arial,system-ui,Segoe UI,Roboto,sans-serif}
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    header{padding:56px 20px; text-align:center; border-bottom:1px solid #222}
+    .title{font-size:clamp(24px,4vw,36px); font-weight:300; margin:0}
+    .subtitle{color:#999; font-weight:300; margin-top:6px}
+
+    .top-actions{display:flex; justify-content:center; gap:12px; margin-top:14px}
+    .btn{display:inline-block; padding:10px 12px; border:1px solid var(--border); border-radius:6px; color:#bbb; background:#101010}
+    .btn:hover{border-color:#444}
+
+    .wrap{max-width:1100px; margin:0 auto; padding:24px}
+    .badge{display:inline-block; padding:6px 10px; border:1px solid var(--border); border-radius:999px; margin:6px 6px 0 0; color:#aaa; font-size:12px}
+
+    .section{background:var(--card); border:1px solid var(--border); border-radius:8px; padding:20px; margin:14px 0}
+    .section h2{font-weight:300; color:#cfcfcf; margin:0 0 8px 0; font-size:clamp(18px,2.5vw,24px)}
+    .section h3{font-weight:300; color:#cfcfcf; margin:14px 0 6px; font-size:clamp(16px,2.2vw,20px)}
+    .section p{color:#ddd; line-height:1.6; margin:8px 0}
+    .muted{color:var(--muted)}
+    .small{font-size:12px; color:#9c9c9c}
+
+    .grid{display:grid; gap:16px}
+    .cols-2{grid-template-columns:repeat(2,1fr)}
+    .cols-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width:860px){ .cols-2,.cols-3{grid-template-columns:1fr} }
+
+    .card{background:#101010; border:1px solid var(--border); border-radius:8px; padding:16px}
+    .imgbox{
+      background:#0c0c0c; border:1px dashed var(--border); border-radius:8px;
+      padding:10px; display:flex; align-items:center; justify-content:center; min-height:180px; color:#aaa
+    }
+    .imgbox img, .imgbox video{max-width:100%; border-radius:6px}
+    .caption{margin-top:8px; color:#cfcfcf; font-weight:300}
+    .desc{color:#bbb; font-size:14px; line-height:1.6}
+    .list{margin:8px 0 4px 20px}
+    .code{font-family:ui-monospace,Menlo,Consolas,monospace; background:#0a0a0a; border:1px solid #1a1a1a; border-radius:6px; padding:10px; color:#d9d9d9; overflow:auto}
+
+    .footer{padding:40px 0; color:#777; font-size:.9rem; text-align:center; border-top:1px solid #222; margin-top:42px}
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="title">Bobina de Tesla</h1>
+    <h2 class="subtitle">Resonancia, chispero y acoplamiento tipo transformador</h2>
+    <div class="top-actions">
+      <a class="btn" href="../index.html">← Volver al Portafolio</a>
+    </div>
+    <div style="margin-top:10px">
+      <span class="badge">Resonancia LC</span>
+      <span class="badge">Spark Gap (chispero)</span>
+      <span class="badge">Acoplamiento primario-secundario</span>
+      <span class="badge">Altas tensiones · RF</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- Resumen -->
+    <section class="section">
+      <h2>Resumen</h2>
+      <p>
+        Proyecto de <strong>Bobina de Tesla</strong> que funcionó correctamente con <em>chispero</em> (spark gap) y
+        emisión de descargas visibles. Aunque se perdieron los documentos de diseño, aquí se reexpone la
+        <em>base teórica</em> para la <strong>frecuencia de resonancia</strong>, estimación de <strong>inductancia</strong>,
+        <strong>capacitancia</strong> del tope (toroide/esfera), y criterios de <strong>acoplamiento</strong> entre primario y secundario.
+      </p>
+    </section>
+
+    <!-- Galería (2 fotos, 2 videos) -->
+    <section class="section">
+      <h2>Evidencias (2 fotos + 2 videos)</h2>
+      <div class="grid cols-2">
+
+        <!-- Foto 1 -->
+        <div class="card">
+          <div class="imgbox">
+          <img src="BOBIN.jpeg">
+          </div>
+          <div class="caption">Foto 1: Vista general de la bobina</div>
+          <p class="desc">Estructura de secundario, toroide/esfera y base del primario.</p>
+        </div>
+
+        <!-- Foto 2 -->
+        <div class="card">
+          <div class="imgbox">
+                      <img src="BOBI2.jpeg">
+          </div>
+          <div class="caption">Foto 2: Descargas en operación</div>
+          <p class="desc">Arcos visibles durante la resonancia con chispero.</p>
+        </div>
+
+        <!-- Video 1 -->
+        <div class="card">
+          <div class="imgbox">
+                      <img src="BOB4.jpeg">
+        </div>
+          <div class="caption">Foto 3: Arranque</div>
+          <p class="desc">Secuencia de encendido y primeros arcos con spark gap.</p>
+        </div>
+
+        <!-- Video 2 -->
+        <div class="card">
+          <div class="imgbox">
+                  <video src="BOB3.mp4" controls></video>
+          </div>
+          <div class="caption">Video 2: Operación sostenida</div>
+          <p class="desc">Arcos largos y variación de carga cercana al terminal.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Teoría de resonancia -->
+    <section class="section">
+      <h2>Fundamento teórico: frecuencia de resonancia</h2>
+      <p>
+        La bobina de Tesla es, esencialmente, un <strong>sistema resonante</strong> donde el secundario se modela como un
+        circuito <strong>LC</strong> (inductancia <em>L</em> del devanado y capacitancia <em>C</em> del terminal superior — toroide o esfera).
+        La frecuencia de resonancia ideal del secundario es:
+      </p>
+      <pre class="code">f₀ = 1 / (2π · √(L · C))</pre>
+      <p>
+        El primario (bobina + capacitor del tanque) también forma un LC. Para transferencia eficiente de energía,
+        se sintoniza el primario a una frecuencia cercana a la del secundario, con <strong>acoplamiento débil</strong> (coeficiente
+        de acoplamiento <em>k</em> típico: 0.05–0.2) para evitar sobreacoplamiento que distorsione el espectro o cause quenching.
+      </p>
+    </section>
+
+    <!-- Inductancia y número de vueltas (estimación) -->
+    <section class="section">
+      <h2>Inductancia del secundario y estimación de número de vueltas</h2>
+      <p>
+        Una estimación práctica de la <strong>inductancia</strong> de una bobina solenoidal (largo &gt;&gt; diámetro) es:
+      </p>
+      <pre class="code">L ≈ μ₀ · N² · A / l
+
+donde:
+  μ₀ = 4π × 10⁻⁷ H/m (permeabilidad del vacío)
+  N  = número de vueltas del secundario
+  A  = área de la sección (π · r²)
+  l  = longitud de la bobina (altura del devanado)
+  r  = radio medio del devanado</pre>
+      <p>
+        Si conoces la <em>frecuencia deseada</em> (f₀) y puedes estimar la <em>C</em> del terminal (ver más abajo), puedes despejar <em>L</em> y luego
+        estimar <strong>N</strong> con esa fórmula. En la práctica, el bobinado secundario suele ir de <strong>~800 a 1600 vueltas</strong> con alambre
+        fino (p. ej., AWG 28–32), y la geometría influye tanto en <em>L</em> como en la capacitancia distribuida (que baja f₀).
+      </p>
+    </section>
+
+    <!-- Capacitancia del terminal (toroide/esfera) -->
+    <section class="section">
+      <h2>Capacitancia del tope (toroide o esfera)</h2>
+      <p>
+        Un terminal <strong>esférico</strong> aislado de radio <em>R</em> (en metros) tiene capacitancia aproximada:
+      </p>
+      <pre class="code">C_esfera ≈ 4π · ε₀ · R   (ε₀ = 8.854 × 10⁻¹² F/m)</pre>
+      <p>
+        Un <strong>toroide</strong> (donut) aumenta C y reduce el campo máximo en la punta, mitigando corona prematura. Su capacitancia efectiva
+        puede aproximarse por fórmulas empíricas o calculadores, pero como guía: un toroide con diámetro mayor incrementa <em>C</em>, lo que
+        <em>disminuye</em> la frecuencia de resonancia <em>f₀</em>.
+      </p>
+      <p class="small muted">
+        Nota: además de la capacitancia del terminal, existe <em>capacitancia distribuida</em> a lo largo del devanado secundario, lo que hace que la
+        frecuencia real sea algo menor que la ideal.
+      </p>
+    </section>
+
+    <!-- Primario, chispero y sintonía -->
+    <section class="section">
+      <h2>Primario, chispero (spark gap) y sintonía</h2>
+      <p>
+        El <strong>primario</strong> consta de <em>Lₚ</em> (bobina de pocas vueltas, alambre grueso o tubería) y un <strong>capacitor</strong> de tanque <em>Cₚ</em>.
+        El <strong>chispero</strong> (<em>spark gap</em>) interrumpe y descarga <em>Cₚ</em> a través de <em>Lₚ</em>, generando oscilaciones amortiguadas a la
+        frecuencia:
+      </p>
+      <pre class="code">fₚ ≈ 1 / (2π · √(Lₚ · Cₚ))</pre>
+      <p>
+        Ajustar la <strong>cantidad de vueltas del primario</strong> y el valor de <em>Cₚ</em> permite igualar o acercar <em>fₚ</em> a <em>f₀</em>.
+        La bobina funciona como un <strong>transformador acoplado por campo</strong>, elevando el voltaje en el secundario a frecuencias de RF.
+      </p>
+      <p class="small muted">
+        Seguridad: el spark gap y el primario manejan tensiones y corrientes peligrosas. Operar con blindaje, distancia, puesta a tierra
+        adecuada y cuidar la interferencia electromagnética (EMI) en equipos cercanos.
+      </p>
+    </section>
+
+
+  </main>
+
+  <footer class="footer">
+    © <span id="y"></span> Amisadai Bautista — Bobina de Tesla
+  </footer>
+
+  <script>
+    // Año dinámico
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
